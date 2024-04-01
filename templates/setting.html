@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>校园健康生活平台</title>
+    <!-- 引入 Bootstrap CSS 文件 -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.1.3/css/bootstrap.min.css"
+    />
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <script src="./static/js/api.js"></script>
+    <style>
+      body{
+        background-image: url("./static/imgs/background.png");
+      }
+      @font-face {
+        font-family: 'MyCustomFont';
+        src: url('/static/font/DingTalk_JinBuTi_Regular.woff2') format('woff2');
+      }
+
+      h1{
+        font-family: 'MyCustomFont';
+      }
+      a{
+        font-family: 'MyCustomFont';
+      }
+      p{
+        font-family:'MyCustomFont';
+      }
+      .navbar-dark {
+        background-color: #00477e;
+      }
+      .col-md-3 {
+        height: px;
+      }
+      .img-fluid {
+        width: 50px;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-md navbar-dark">
+      <!-- 导航栏品牌 -->
+      <a class="navbar-brand" href="#" style="margin-left: 10px"
+        >校园健康生活平台</a
+      >
+
+      <!-- 导航栏切换按钮 -->
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="profile">个人中心</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">系统工具</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="application">请假申请</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="chat">健康助手</a>
+        </li>
+        </ul>
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item" id="login-status">
+            <a class="nav-link" href="#">
+              <img
+                src="./static/imgs/用户白.png"
+                width="25px"
+                class="rounded-circle"
+              />
+              <span id="login-status-text">已登录</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <h1 id="header">系统工具</h1>
+          <div class="row">
+            <div class="col-md-3 text-center">
+              <img src="./static/imgs/药物.png" class="img-fluid" />
+              <p class="text-center">闲置药品</p>
+            </div>
+            <div class="col-md-3 text-center">
+              <img src="./static/imgs/打卡.png" class="img-fluid" id="upload-image" />
+              <p class="text-center">运动打卡</p>
+            </div>
+            <div class="col-md-3 text-center">
+              <img src="./static//imgs/疫苗.png" class="img-fluid" id="vaccine-image" />
+              <p class="text-center">疫苗接种</p>
+            </div>
+            <div class="col-md-3 text-center">
+              <img src="./static//imgs/medicine.png" class="img-fluid" />
+              <p class="text-center">第四功能</p>
+            </div>
+          </div>
+        </div>
+        <!-- 体育打卡 -->
+        <!-- <div class="row" id="upload-form" style="display: none">
+          <form>
+            <label for="exercise-type">运动类型：</label>
+            <select id="exercise-type" name="exercise-type">
+              <option value="跑步">跑步</option>
+              <option value="篮球">篮球</option>
+              <option value="排球">排球</option>
+              <option value="足球">足球</option>
+              <option value="乒乓球">乒乓球</option>
+              <option value="羽毛球">羽毛球</option>
+              <option value="网球">网球</option>
+              <option value="台球">台球</option>
+            </select>
+            <br />
+            <label for="exercise-location">运动地点：</label>
+            <input
+              type="text"
+              id="exercise-location"
+              name="exercise-location"
+              placeholder="请输入运动地点"
+            />
+            <br />
+            <label for="exercise-time">运动时间（分钟）：</label>
+            <input
+              type="number"
+              id="exercise-time"
+              name="exercise-time"
+              placeholder="请输入运动时间"
+            />
+            <br />
+            <button type="submit" id="submit-button">上传</button>
+          </form>
+        </div> -->
+        <div class="container" id="upload-form" style="display: none">
+          <div class="row my-5">
+            <div class="col-md-6 mx-auto">
+              <form>
+                <div class="form-group mb-4">
+                  <label for="exercise-type">运动类型：</label>
+                  <select id="exercise-type" name="exercise-type" class="form-control">
+                    <option value="跑步">跑步</option>
+                    <option value="篮球">篮球</option>
+                    <option value="排球">排球</option>
+                    <option value="足球">足球</option>
+                    <option value="乒乓球">乒乓球</option>
+                    <option value="羽毛球">羽毛球</option>
+                    <option value="网球">网球</option>
+                    <option value="台球">台球</option>
+                  </select>
+                </div>
+                <div class="form-group mb-4">
+                  <label for="exercise-location">运动地点：</label>
+                  <input
+                    type="text"
+                    id="exercise-location"
+                    name="exercise-location"
+                    class="form-control"
+                    placeholder="请输入运动地点"
+                  />
+                </div>
+                <div class="form-group mb-4">
+                  <label for="exercise-time">运动时间（分钟）：</label>
+                  <input
+                    type="number"
+                    id="exercise-time"
+                    name="exercise-time"
+                    class="form-control"
+                    placeholder="请输入运动时间"
+                  />
+                </div>
+                <div class="form-group text-center">
+                  <button type="submit" id="submit-button" class="btn btn-primary btn-block">上传</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        
+        
+        <div class="row" id="vaccine-form" style="display: none">
+          <h3 class="text-center mb-3">疫苗接种信息</h3>
+          <form>
+            <div class="form-group row mb-4">
+              <label for="dose1-date" class="col-sm-3 col-form-label"
+                >第一针接种时间:</label
+              >
+              <div class="col-sm-9">
+                <input
+                  type="datetime-local"
+                  class="form-control"
+                  id="dose1-date"
+                />
+              </div>
+            </div>
+            <div class="form-group row mb-4">
+              <label for="dose1-company" class="col-sm-3 col-form-label"
+                >接种公司:</label
+              >
+              <div class="col-sm-9">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="dose1-company"
+                  placeholder="请输入接种公司"
+                />
+              </div>
+            </div>
+            <div class="form-group row mb-4">
+              <label for="dose2-date" class="col-sm-3 col-form-label"
+                >第二针接种时间:</label
+              >
+              <div class="col-sm-9">
+                <input
+                  type="datetime-local"
+                  class="form-control"
+                  id="dose2-date"
+                />
+              </div>
+            </div>
+            <div class="form-group row mb-4">
+              <label for="dose2-company" class="col-sm-3 col-form-label"
+                >接种公司:</label
+              >
+              <div class="col-sm-9">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="dose2-company"
+                  placeholder="请输入接种公司"
+                />
+              </div>
+            </div>
+            <div class="form-group row mb-4">
+              <label for="dose3-date" class="col-sm-3 col-form-label"
+                >第三针接种时间:</label
+              >
+              <div class="col-sm-9">
+                <input
+                  type="datetime-local"
+                  class="form-control"
+                  id="dose3-date"
+                />
+              </div>
+            </div>
+            <div class="form-group row mb-4">
+              <label for="dose3-company" class="col-sm-3 col-form-label"
+                >接种公司:</label
+              >
+              <div class="col-sm-9">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="dose3-company"
+                  placeholder="请输入接种公司"
+                />
+              </div>
+            </div>
+            <div class="form-group row mb-4">
+              <label for="dose4-date" class="col-sm-3 col-form-label"
+                >第四针接种时间:</label
+              >
+              <div class="col-sm-9">
+                <input
+                  type="datetime-local"
+                  class="form-control"
+                  id="dose4-date"
+                />
+              </div>
+            </div>
+            <div class="form-group row mb-4">
+              <label for="dose4-company" class="col-sm-3 col-form-label"
+                >接种公司:</label
+              >
+              <div class="col-sm-9">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="dose4-company"
+                  placeholder="请输入接种公司"
+                />
+              </div>
+            </div>
+            <div class="form-group row mb-4">
+              <label for="covid-checkbox" class="col-sm-3 col-form-label"
+                >是否感染新冠:</label
+              >
+              <div class="col-sm-9">
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="covid-checkbox"
+                  />
+                  <label class="form-check-label" for="covid-checkbox">
+                    是
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row mb-4">
+              <label for="covid-date" class="col-sm-3 col-form-label"
+                >感染时间:</label
+              >
+              <div class="col-sm-9">
+                <input
+                  type="datetime-local"
+                  class="form-control"
+                  id="covid-date"
+                />
+              </div>
+            </div>
+            <div class="form-group row mb-4">
+              <label for="recovery-checkbox" class="col-sm-3 col-form-label"
+                >是否痊愈:</label
+              >
+              <div class="col-sm-9">
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="recovery-checkbox"
+                  />
+                  <label class="form-check-label" for="recovery-checkbox">
+                    是
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="form-group row mb-4">
+              <label for="recovery-date" class="col-sm-3 col-form-label"
+                >痊愈时间:</label
+              >
+              <div class="col-sm-9">
+                <input
+                  type="datetime-local"
+                  class="form-control"
+                  id="recovery-date"
+                />
+              </div>
+            </div>
+            <div class="form-group row mb-4">
+              <div class="col-sm-12 text-center">
+                <button type="submit" class="btn btn-primary">上传</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <script>
+      const uploadImage = document.getElementById("upload-image");
+      const uploadForm = document.getElementById("upload-form");
+
+      uploadImage.addEventListener("click", () => {
+        uploadForm.style.display = "block";
+        if (vaccineForm.style.display === "block") {
+          vaccineForm.style.display = "none";
+        }
+      });
+      // 疫苗统计
+      const vaccineImage = document.getElementById("vaccine-image");
+      const vaccineForm = document.getElementById("vaccine-form");
+
+      vaccineImage.addEventListener("click", () => {
+        vaccineForm.style.display = "block";
+        if (uploadForm.style.display === "block") {
+          uploadForm.style.display = "none";
+        }
+      });
+    </script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.1.3/js/bootstrap.min.js"></script>
+
+  </body>
+</html>

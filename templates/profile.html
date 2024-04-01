@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>校园疫情防控系统</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 引入 Bootstrap CSS 文件 -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.1.3/css/bootstrap.min.css"
+    />
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <script src="./static/js/date.js"></script>
+    <script>
+        $(document).ready(function(){
+            $.get("/user_info",function(data){
+                if(data['IsLogin']==1){
+                    var age=CountAge(data['birth'])
+                    var sex=data['sex']=="M"?"男":"女"
+                    $("#login-status a").attr("href","/profile")
+                    $("#login-status-text").text(data['name'])
+                    $("#uname").text(data['name'])
+                    $("#uage").text("年龄："+age)
+                    $("#usex").text("性别："+sex)
+                    $("#uclass").text("班级："+data['academy']+data['_class'])
+                    if(data['avatar'])
+                      $("#avatar").attr("src","./static/avatar/"+data['avatar']+".jpg")
+                    else
+                      $("#avatar").attr("src","./static/avatar/demo.jpg")
+                    window.userinfo=data
+                }
+            })
+        })
+    </script>
+    <style>
+      body{
+        background-image: url("./static/imgs/background.png");
+      }
+      @font-face {
+        font-family: 'MyCustomFont';
+        src: url('/static/font/DingTalk_JinBuTi_Regular.woff2') format('woff2');
+      }
+
+      h1{
+        font-family: 'MyCustomFont';
+      }
+      a{
+        font-family: 'MyCustomFont';
+      }
+      p{
+        font-family:'MyCustomFont';
+      }
+      .col-md-3 {
+        height: 200px; /* 修改块的高度为200像素 */
+      }
+
+      .navbar-dark {
+        background-color: #00477e;
+      }
+      .img-fluid {
+        border-radius: 50%;
+        width: 100px;
+        height: auto;
+      }
+      /* .description {
+        display: inline-block;
+        font-size: 25px;
+      } */
+      .selfinformation {
+        margin-top: 20px;
+      }
+      .description span {
+        font-weight: bold;
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-md navbar-dark">
+      <!-- 导航栏品牌 -->
+      <a class="navbar-brand" href="#" style="margin-left: 10px"
+        >校园健康生活平台</a
+      >
+
+      <!-- 导航栏切换按钮 -->
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">个人中心</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="setting">系统工具</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="application">请假申请</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="chat">健康助手</a>
+        </li>
+        </ul>
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item" id="login-status">
+            <a class="nav-link" href="#">
+              <img
+                src="./static/imgs/用户白.png"
+                width="25px"
+                class="rounded-circle"
+              />
+              <span id="login-status-text"></span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-md-9">
+          <div class="selfinformation">
+            <div class="row">
+              <div class="col-md-2">
+                <img src="#" class="img-fluid rounded-circle" id="avatar"/>
+              </div>
+              <div class="col-md-2 align-self-center">
+                <p class="fw-bold fs-3" id="uname"></p>
+              </div>
+              <div class="col-md-8">
+                <p class="description" id="uage"></p>
+                <p class="description" id="usex"></p>
+                <p class="description" id="uclass"></p>
+              </div>
+            </div>
+            <hr />
+            <div class="row">
+              <div class="col-md-12">
+                <h3>闲置药物</h3>
+                <p>布洛芬颗粒</p>
+                <p>肠炎宁片</p>
+              </div>
+            </div>
+            <hr />
+            <div class="row">
+              <div class="col-md-12">
+                <h3>体育打卡情况</h3>
+                <p>2023.3.4 操场 4km 30min</p>
+                <p>2023.3.5 体育馆 乒乓球 2hours</p>
+              </div>
+            </div>
+            <hr />
+            <div class="row">
+              <div class="col-md-12">
+                <h3>疫苗接种情况</h3>
+                <p>第一针 2021.6.7 科兴</p>
+                <p>第二针 2021.8.5 科兴</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-3">
+          <h3>Important Information</h3>
+          <ul>
+            <li>Item 1</li>
+            <li>Item 2</li>
+            <li>Item 3</li>
+            <li>Item 4</li>
+            <li>Item 5</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- 引入 Bootstrap JS 文件 -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.1.3/js/bootstrap.min.js"></script>
+  </body>
+</html>
